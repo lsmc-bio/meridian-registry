@@ -1,0 +1,43 @@
+name: Public domain claim
+description: Request a public Meridian domain-code assignment.
+title: "Public domain claim: <DOMAIN>"
+labels:
+  - domain-claim
+body:
+  - type: input
+    id: domain
+    attributes:
+      label: Domain code
+      description: Use 1-4 characters from the Meridian alphabet.
+      placeholder: "Q"
+    validations:
+      required: true
+  - type: input
+    id: holder
+    attributes:
+      label: Public holder label
+      description: Public organization or project label to show in the registry.
+      placeholder: "Example Organization"
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Claim rationale
+      description: Explain why this domain should be assigned.
+    validations:
+      required: true
+  - type: input
+    id: prefix_registry
+    attributes:
+      label: Public prefix registry URL
+      description: Optional. Leave blank when no public prefix registry is declared.
+    validations:
+      required: false
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: This public claim does not include raw emails, phone numbers, postal addresses, or private identity mappings.
+          required: true

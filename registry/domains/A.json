@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/domain.schema.json",
+  "domain": "A",
+  "status": "reserved",
+  "assigned_at": "2026-06-04",
+  "assignment_type": "registry_reserved",
+  "holder": {
+    "visibility": "public",
+    "public_label": "Meridian Registry",
+    "holder_ref": "registry"
+  },
+  "prefix_authority": "none",
+  "prefix_registry": {
+    "mode": "none_declared",
+    "url": null
+  },
+  "contact": {
+    "mode": "registry_issue",
+    "url": null
+  },
+  "notes": "Reserved by the current Meridian source as not assigned for issuance."
+}

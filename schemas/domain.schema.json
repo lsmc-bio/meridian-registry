@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lsmc-bio/meridian-registry/schemas/domain.schema.json",
+  "title": "Meridian Domain Registry Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "domain",
+    "status",
+    "assigned_at",
+    "assignment_type",
+    "holder",
+    "prefix_authority",
+    "prefix_registry",
+    "contact",
+    "notes"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../../schemas/domain.schema.json"
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^[0-9A-HJ-KMNP-TV-Z]{1,4}$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "reserved",
+        "assigned",
+        "retired",
+        "disputed"
+      ]
+    },
+    "assigned_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "assignment_type": {
+      "type": "string",
+      "enum": [
+        "public_owner",
+        "private_owner",
+        "registry_reserved",
+        "historical"
+      ]
+    },
+    "holder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "visibility",
+        "public_label",
+        "holder_ref"
+      ],
+      "properties": {
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "private"
+          ]
+        },
+        "public_label": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "holder_ref": {
+          "type": "string",
+          "anyOf": [
+            {
+              "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+            },
+            {
+              "pattern": "^holder_[0-9A-HJ-KMNP-TV-Z]{6,16}$"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "visibility": {
+                "const": "private"
+              }
+            },
+            "required": [
+              "visibility"
+            ]
+          },
+          "then": {
+            "properties": {
+              "public_label": {
+                "type": "null"
+              },
+              "holder_ref": {
+                "pattern": "^holder_[0-9A-HJ-KMNP-TV-Z]{6,16}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "visibility": {
+                "const": "public"
+              }
+            },
+            "required": [
+              "visibility"
+            ]
+          },
+          "then": {
+            "properties": {
+              "public_label": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "prefix_authority": {
+      "type": "string",
+      "enum": [
+        "domain_holder",
+        "registry_examples",
+        "none"
+      ]
+    },
+    "prefix_registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "url"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "public",
+            "private",
+            "none_declared"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "public"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "url": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "url"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "registry_issue",
+            "private_contact",
+            "none"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

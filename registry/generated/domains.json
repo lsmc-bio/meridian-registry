@@ -1,0 +1,205 @@
+{
+  "domain_count": 9,
+  "domains": [
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "registry_reserved",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "A",
+      "holder": {
+        "holder_ref": "registry",
+        "public_label": "Meridian Registry",
+        "visibility": "public"
+      },
+      "notes": "Reserved by the current Meridian source as not assigned for issuance.",
+      "prefix_authority": "none",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "reserved"
+    },
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "public_owner",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "D",
+      "holder": {
+        "holder_ref": "org_daylily_informatics",
+        "public_label": "Daylily Informatics",
+        "visibility": "public"
+      },
+      "notes": "Initial registry bootstrap assignment. The inspected Meridian source did not register D; it only included D2 as a routing example domain.",
+      "prefix_authority": "domain_holder",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "assigned"
+    },
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "registry_reserved",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "F",
+      "holder": {
+        "holder_ref": "org_inflection",
+        "public_label": "Inflection",
+        "visibility": "public"
+      },
+      "notes": "Reserved for Inflection in the current Meridian source. This supersedes the bootstrap prompt example that mapped Inflection to N.",
+      "prefix_authority": "domain_holder",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "reserved"
+    },
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "registry_reserved",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "M",
+      "holder": {
+        "holder_ref": "org_lsmc",
+        "public_label": "LSMC",
+        "visibility": "public"
+      },
+      "notes": "Reserved for LSMC in the current Meridian source. M is already in production use; LSMC non-production use requires exactly three explicit approval tokens before issuance or prefix-claim validation proceeds.",
+      "prefix_authority": "domain_holder",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "reserved"
+    },
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "registry_reserved",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "N",
+      "holder": {
+        "holder_ref": "org_lsmc",
+        "public_label": "LSMC",
+        "visibility": "public"
+      },
+      "notes": "Reserved for LSMC in the current Meridian source. This supersedes the bootstrap prompt example that mapped N to Inflection.",
+      "prefix_authority": "domain_holder",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "reserved"
+    },
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "registry_reserved",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "W",
+      "holder": {
+        "holder_ref": "registry",
+        "public_label": "Meridian Registry",
+        "visibility": "public"
+      },
+      "notes": "Reserved for testing and examples by the current Meridian source.",
+      "prefix_authority": "registry_examples",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "reserved"
+    },
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "registry_reserved",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "X",
+      "holder": {
+        "holder_ref": "registry",
+        "public_label": "Meridian Registry",
+        "visibility": "public"
+      },
+      "notes": "Reserved for testing and examples by the current Meridian source.",
+      "prefix_authority": "registry_examples",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "reserved"
+    },
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "registry_reserved",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "Y",
+      "holder": {
+        "holder_ref": "registry",
+        "public_label": "Meridian Registry",
+        "visibility": "public"
+      },
+      "notes": "Reserved for testing and examples by the current Meridian source.",
+      "prefix_authority": "registry_examples",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "reserved"
+    },
+    {
+      "$schema": "../../schemas/domain.schema.json",
+      "assigned_at": "2026-06-04",
+      "assignment_type": "registry_reserved",
+      "contact": {
+        "mode": "registry_issue",
+        "url": null
+      },
+      "domain": "Z",
+      "holder": {
+        "holder_ref": "registry",
+        "public_label": "Meridian Registry",
+        "visibility": "public"
+      },
+      "notes": "Reserved for testing, examples, development, and documentation fixtures.",
+      "prefix_authority": "registry_examples",
+      "prefix_registry": {
+        "mode": "none_declared",
+        "url": null
+      },
+      "status": "reserved"
+    }
+  ],
+  "generated_at": "1970-01-01T00:00:00Z",
+  "registry_version": "0.1.0"
+}

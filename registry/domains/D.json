@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/domain.schema.json",
+  "domain": "D",
+  "status": "assigned",
+  "assigned_at": "2026-06-04",
+  "assignment_type": "public_owner",
+  "holder": {
+    "visibility": "public",
+    "public_label": "Daylily Informatics",
+    "holder_ref": "org_daylily_informatics"
+  },
+  "prefix_authority": "domain_holder",
+  "prefix_registry": {
+    "mode": "none_declared",
+    "url": null
+  },
+  "contact": {
+    "mode": "registry_issue",
+    "url": null
+  },
+  "notes": "Initial registry bootstrap assignment. The inspected Meridian source did not register D; it only included D2 as a routing example domain."
+}

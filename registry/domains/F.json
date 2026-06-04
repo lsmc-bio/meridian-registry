@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/domain.schema.json",
+  "domain": "F",
+  "status": "reserved",
+  "assigned_at": "2026-06-04",
+  "assignment_type": "registry_reserved",
+  "holder": {
+    "visibility": "public",
+    "public_label": "Inflection",
+    "holder_ref": "org_inflection"
+  },
+  "prefix_authority": "domain_holder",
+  "prefix_registry": {
+    "mode": "none_declared",
+    "url": null
+  },
+  "contact": {
+    "mode": "registry_issue",
+    "url": null
+  },
+  "notes": "Reserved for Inflection in the current Meridian source. This supersedes the bootstrap prompt example that mapped Inflection to N."
+}

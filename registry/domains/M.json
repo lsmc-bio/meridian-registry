@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/domain.schema.json",
+  "domain": "M",
+  "status": "reserved",
+  "assigned_at": "2026-06-04",
+  "assignment_type": "registry_reserved",
+  "holder": {
+    "visibility": "public",
+    "public_label": "LSMC",
+    "holder_ref": "org_lsmc"
+  },
+  "prefix_authority": "domain_holder",
+  "prefix_registry": {
+    "mode": "none_declared",
+    "url": null
+  },
+  "contact": {
+    "mode": "registry_issue",
+    "url": null
+  },
+  "notes": "Reserved for LSMC in the current Meridian source. M is already in production use; LSMC non-production use requires exactly three explicit approval tokens before issuance or prefix-claim validation proceeds."
+}
