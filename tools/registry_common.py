@@ -8,7 +8,7 @@ from typing import Any
 
 ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
 FORBIDDEN = frozenset("ILOU")
-REGISTRY_VERSION = "0.1.0"
+REGISTRY_VERSION = "0.1.1"
 STABLE_GENERATED_AT = "1970-01-01T00:00:00Z"
 
 ROOT = Path(__file__).resolve().parents[1]
