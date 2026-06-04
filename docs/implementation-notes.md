@@ -31,17 +31,17 @@ The source domain registry includes these reserved domains:
 - `A`: reserved; not assigned for issuance.
 - `F`: reserved for Inflection.
 - `M`: reserved for LSMC, already in production use, with triple approval required for LSMC non-production use.
-- `N`: reserved for LSMC.
+- `N`: reserved for LSMC in the archived source.
 - `W`, `X`, `Y`, `Z`: testing reserved domains.
 
 The source JSON spells `reserved_for` as `testig` for `W`, `X`, `Y`, and `Z`; this registry normalizes the public note to testing/examples language and records the source spelling here for provenance.
 
 ## Prompt Conflicts
 
-The bootstrap prompt requested `M`, `N`, and `D` as assigned domains and mapped `N` to Inflection. Current Meridian source superseded that example:
+The bootstrap prompt requested `M`, `N`, and `D` as assigned domains and mapped `N` to Inflection. The first bootstrap implementation followed the archived Meridian source for `N`; the user then corrected the registry requirement on 2026-06-04: `N` is for Inflection.
 
 - `M` remains reserved for LSMC, not changed to assigned.
-- `N` remains reserved for LSMC, not Inflection.
+- `N` is assigned to Inflection by explicit user correction.
 - `F` is included as the current Inflection reservation.
 - `D` is added as a new assigned bootstrap record for Daylily Informatics because the current source did not register `D`; the source did include `D2` as a routing example domain.
 

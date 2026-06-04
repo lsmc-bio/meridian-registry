@@ -4,7 +4,7 @@ Date: 2026-06-04
 
 ## Summary
 
-Create a new public, GitHub-native Meridian domain-code registry at `/Users/jmajor/projects/lsmc/archived/meridian-registry`. The registry governs domain codes only, not prefix assignments below a domain. Current Meridian source wins over prompt examples when they conflict.
+Create a new public, GitHub-native Meridian domain-code registry at `/Users/jmajor/projects/lsmc/archived/meridian-registry`. The registry governs domain codes only, not prefix assignments below a domain. Current Meridian source wins over prompt examples when they conflict unless the user gives a later explicit registry correction.
 
 ## Gate 0: Inventory Freeze
 
@@ -18,6 +18,7 @@ Create a new public, GitHub-native Meridian domain-code registry at `/Users/jmaj
 - Source files inspected: `SPEC.md`, `domain_code_registry.json`, `prefix_ownership_registry.json`, `reference-implementations/python/meridian_euid/euid.py`, `reference-implementations/python/meridian_euid/governance.py`, `reference-implementations/python/meridian_euid/mod32.py`, `docs/plans/20260521T214153Z_reserved_m_n_domain_ledger.md`.
 - Source rules discovered: domain codes are 1-4 characters from `0123456789ABCDEFGHJKMNPQRSTVWXYZ`; forbidden characters are `I`, `L`, `O`, `U`; lowercase, whitespace, non-ASCII input, trimming, tolerant decoding, and character substitution are rejected.
 - Source conflict recorded: current source reserves `M` and `N` for LSMC, reserves `F` for Inflection, and does not register `D`; the prompt example saying `N = Inflection` and `M/N assigned` is superseded by current source.
+- Amendment recorded: on 2026-06-04 the user explicitly corrected the registry requirement to `N is for Inflection`; the `N` record follows that user correction instead of the archived source reservation.
 - Prefix boundary: source says prefix ownership is `(DOMAIN, PREFIX)` governance and software must not infer object type, workflow state, clinical meaning, assay meaning, or business truth from domain or prefix strings.
 - Live-system limits: no GitHub remote creation, GitHub Pages, cloud resources, databases, servers, or live external mutations are part of this plan.
 
@@ -26,24 +27,25 @@ Create a new public, GitHub-native Meridian domain-code registry at `/Users/jmaj
 | ID | Area | Requirement | Status | Category | Approval Gate | Owner | Evidence | Root Cause | Terminal Note |
 |---|---|---|---|---|---|---|---|---|---|
 | LEDGER-001 | Ledger | Initialize repo, `docs/plans/`, control ledger, branch/status baseline, source-inspection evidence | SUCCESS | plan_amendment | Gate 0 | Orchestrator | `git init -b main`; this ledger; Gate 0 inventory above |  | Repo initialized and ledger created before implementation rows were terminalized. |
-| SRC-001 | Source Truth | Record inspected Meridian source files, alphabet, length, forbidden chars, current reserved domains, prefix-governance boundary | SUCCESS | feature_implementation | Gate 0 | Agent 1 | `docs/implementation-notes.md`; inspected source files listed in Gate 0 |  | Source rules and prompt conflicts are documented, including `F` for Inflection and `M/N` for LSMC. |
+| SRC-001 | Source Truth | Record inspected Meridian source files, alphabet, length, forbidden chars, current reserved domains, prefix-governance boundary | SUCCESS | feature_implementation | Gate 0 | Agent 1 | `docs/implementation-notes.md`; inspected source files listed in Gate 0 |  | Source rules and prompt conflicts are documented, including `F` for Inflection and the user correction that `N` is for Inflection. |
 | REG-001 | Registry Data | Create schema and domain JSON source records for `A,D,F,M,N,W,X,Y,Z` | SUCCESS | feature_implementation | Gate 1 | Agent 2 | `schemas/domain.schema.json`; `registry/domains/{A,D,F,M,N,W,X,Y,Z}.json`; `python tools/validate_registry.py` -> passed |  | Domain records validate and filenames match domain fields. |
 | REG-002 | Generated Index | Implement deterministic index builder | SUCCESS | feature_implementation | Gate 1 | Agent 2 | `tools/build_index.py`; `registry/generated/domains.json`; `python tools/build_index.py --stable` -> wrote 9 domains |  | Stable index uses `generated_at: "1970-01-01T00:00:00Z"` and sorted domain records. |
 | TOOL-001 | Validation | Implement validator with schema validation, uniqueness, filename/domain match, stale-index detection, no PII scan, URL mode rules | SUCCESS | feature_implementation | Gate 2 | Agent 3 | `tools/validate_registry.py`; `tools/registry_common.py`; `python tools/validate_registry.py` -> passed; `python -m pytest` -> 14 passed |  | Validator fails hard for malformed records and stale generated output. |
-| TOOL-002 | CLI | Implement `check_domain.py` exit codes and public/private display rules | SUCCESS | feature_implementation | Gate 2 | Agent 3 | `tools/check_domain.py`; `python tools/check_domain.py D` -> exit 1 assigned to Daylily Informatics; `M/N/F/Z` -> exit 1 reserved; `Q` -> exit 0 available |  | CLI behavior matches the requested availability contract. |
+| TOOL-002 | CLI | Implement `check_domain.py` exit codes and public/private display rules | SUCCESS | feature_implementation | Gate 2 | Agent 3 | `tools/check_domain.py`; `python tools/check_domain.py D` -> exit 1 assigned to Daylily Informatics; `M/F/Z` -> exit 1 reserved; `N` -> exit 1 assigned to Inflection; `Q` -> exit 0 available |  | CLI behavior matches the corrected availability contract. |
 | DOC-001 | Docs | Write README, GOVERNANCE, CONTRIBUTING, private-claims, prefix-registries | SUCCESS | feature_implementation | Gate 3 | Agent 4 | `README.md`; `GOVERNANCE.md`; `CONTRIBUTING.md`; `docs/private-claims.md`; `docs/prefix-registries.md` |  | Docs state domain-only governance, optional holder prefix registries, and no prefix/business inference. |
 | DOC-002 | Repo Metadata | Add LICENSE, minimal CODEOWNERS, issue templates | SUCCESS | feature_implementation | Gate 3 | Agent 4 | `LICENSE`; `CODEOWNERS`; `.github/ISSUE_TEMPLATE/public-domain-claim.yml`; `.github/ISSUE_TEMPLATE/private-domain-claim.md`; `.github/workflows/validate.yml` |  | CC-BY-4.0 license added; CODEOWNERS avoids invented owners; templates avoid personal data. |
-| TEST-001 | Tests | Add pytest coverage for initial records, conflicts, sorting, duplicates, mismatch, invalid chars, private holder privacy, public URL requirement, no PII | SUCCESS | contract_test | Gate 4 | Agent 5 | `tests/test_registry.py`; first `python -m pytest` -> 13 passed, 1 failed due overly specific jsonschema wording assertion; patched assertion; rerun `python -m pytest` -> 14 passed |  | Tests cover requested scenarios and pass after the assertion wording fix. |
+| TEST-001 | Tests | Add pytest coverage for initial records, conflicts, sorting, duplicates, mismatch, invalid chars, private holder privacy, public URL requirement, no PII | SUCCESS | contract_test | Gate 4 | Agent 5 | `tests/test_registry.py`; first `python -m pytest` -> 13 passed, 1 failed due overly specific jsonschema wording assertion; patched assertion; rerun `python -m pytest` -> 14 passed; after `N` correction rerun -> 15 passed |  | Tests cover requested scenarios and pass after the assertion wording fix and `N` correction coverage. |
 | CI-001 | CI | Add GitHub Actions validation workflow | SUCCESS | contract_test | Gate 4 | Agent 5 | `.github/workflows/validate.yml` runs Python 3.11, install deps, build stable index, validate, pytest, `git diff --exit-code` |  | CI validates schema, generated index, and tests. |
-| ACCEPT-001 | Acceptance | Final ledger terminalization and summary | SUCCESS | contract_test | Gate 5 | Orchestrator | `python tools/build_index.py --stable` -> passed; `python tools/validate_registry.py` -> passed; domain CLI commands checked; `python -m pytest` -> 14 passed; initial commit created; `git diff --exit-code` -> passed |  | All rows are terminal and no blockers remain. |
+| ACCEPT-001 | Acceptance | Final ledger terminalization and summary | SUCCESS | contract_test | Gate 5 | Orchestrator | `python tools/build_index.py --stable` -> passed; `python tools/validate_registry.py` -> passed before and after `N` correction; domain CLI commands checked; `python -m pytest` -> 15 passed after `N` correction; initial commit created |  | All rows are terminal and no blockers remain. |
+| AMEND-001 | User Correction | Correct `N` to Inflection after user rejected the LSMC assignment | SUCCESS | plan_amendment | Gate 5 | Orchestrator | User message: `N is for Inflection`; `registry/domains/N.json`; `README.md`; `docs/implementation-notes.md`; `tests/test_registry.py`; regenerated `registry/generated/domains.json`; `python tools/check_domain.py N` -> exit 1, assigned to Inflection; `python tools/validate_registry.py` -> passed; `python -m pytest` -> 15 passed |  | `N` is assigned to Inflection by explicit user correction. |
 
 ## Terminal-State Report
 
-- `SUCCESS`: 11
+- `SUCCESS`: 12
 - `DUPLICATE`: 0
 - `NO_LONGER_NEEDED`: 0
 - `FAIL`: 0
 - `BLOCKED`: 0
 - Working rows remaining: 0
 
-Objective complete: yes. The registry repo, source records, generated index, tooling, docs, tests, CI, and ledger are complete with current-source conflicts documented.
+Objective complete: yes. The registry repo, source records, generated index, tooling, docs, tests, CI, and ledger are complete with `N` assigned to Inflection by explicit user correction.

@@ -1,13 +1,13 @@
 {
   "$schema": "../../schemas/domain.schema.json",
   "domain": "N",
-  "status": "reserved",
+  "status": "assigned",
   "assigned_at": "2026-06-04",
-  "assignment_type": "registry_reserved",
+  "assignment_type": "public_owner",
   "holder": {
     "visibility": "public",
-    "public_label": "LSMC",
-    "holder_ref": "org_lsmc"
+    "public_label": "Inflection",
+    "holder_ref": "org_inflection"
   },
   "prefix_authority": "domain_holder",
   "prefix_registry": {
@@ -18,5 +18,5 @@
     "mode": "registry_issue",
     "url": null
   },
-  "notes": "Reserved for LSMC in the current Meridian source. This supersedes the bootstrap prompt example that mapped N to Inflection."
+  "notes": "Assigned to Inflection by explicit user correction on 2026-06-04. The earlier bootstrap pass had followed the archived Meridian source, which listed N as reserved for LSMC."
 }

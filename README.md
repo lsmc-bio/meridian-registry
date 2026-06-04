@@ -49,13 +49,13 @@ Exit codes:
 | `D` | assigned | Daylily Informatics |
 | `F` | reserved | Inflection |
 | `M` | reserved | LSMC |
-| `N` | reserved | LSMC |
+| `N` | assigned | Inflection |
 | `W` | reserved | Testing/examples |
 | `X` | reserved | Testing/examples |
 | `Y` | reserved | Testing/examples |
 | `Z` | reserved | Testing/examples/development/documentation fixtures |
 
-The inspected Meridian source reserves `F` for Inflection and `N` for LSMC. That source truth supersedes earlier bootstrap prompt examples that mapped Inflection to `N`.
+The inspected Meridian source reserves `F` for Inflection and listed `N` for LSMC. The registry record for `N` follows the explicit 2026-06-04 user correction that `N` is for Inflection.
 
 ## Claim A Public Domain
 

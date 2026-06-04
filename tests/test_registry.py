@@ -107,7 +107,6 @@ def test_check_domain_reports_assigned_holder() -> None:
 def test_check_domain_reports_reserved_holders_and_purpose() -> None:
     expected = {
         "M": "reserved for LSMC",
-        "N": "reserved for LSMC",
         "F": "reserved for Inflection",
         "Z": "testing, examples, development",
     }
@@ -121,6 +120,19 @@ def test_check_domain_reports_reserved_holders_and_purpose() -> None:
         )
         assert result.returncode == 1
         assert text in result.stdout
+
+
+def test_check_domain_reports_n_assigned_to_inflection() -> None:
+    result = subprocess.run(
+        [sys.executable, "tools/check_domain.py", "N"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 1
+    assert "N is assigned to Inflection." in result.stdout
 
 
 def test_check_domain_reports_available_for_valid_unassigned_q() -> None:
