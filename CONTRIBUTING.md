@@ -1,35 +1,36 @@
-# Contributing
+# Request a domain or prefix
 
-## Add Or Change A Domain
+**Open a pull request targeting `main`.** This covers new assignments, reserved
+domains/prefixes, activation, transfers, and retirement. Discussion issues do
+not grant or reserve names.
 
-1. Add or edit one source record under `registry/domains/<DOMAIN>.json`.
-2. Keep `<DOMAIN>.json` exactly matched to the record's `domain` field.
-3. Do not include personal data in public registry files.
-4. Rebuild the generated index:
+1. Start a working branch from current `main`.
+2. Add or edit the exact source record:
+   - Domain: `registry/domains/<DOMAIN>.json`, following the domain schema.
+   - Prefix: `registry/prefixes/<DOMAIN>/<PREFIX>.json`, following the
+     [four-field contract](docs/prefix-registries.md).
+3. Explain the requested owner and purpose in the PR. Reserved namespaces need
+   approval from their current authority. Prefixes need domain-holder approval.
+4. Regenerate the committed outputs:
 
 ```bash
 python tools/build_index.py --stable
 ```
 
-5. Validate and test:
+5. Include source records and generated outputs in the PR to `main`. Existing
+   repository checks and maintainer review apply. Do not resolve conflicts by
+   overwriting another assignment.
 
-```bash
-python tools/validate_registry.py
-python -m pytest
-git diff --exit-code
-```
+Only an authorized merge into `main` makes the assignment effective. Git
+history records its provenance. Retired records remain permanently; domains
+and prefixes are not recycled for unrelated identities.
 
-## Pull Request Requirements
+The optional `tools/request_prefix.py` helper prepares a new prefix request
+without publishing or granting it. See the [prefix guide](docs/prefix-registries.md).
 
-Pull requests should include:
+## Public records
 
-- The domain JSON source record.
-- The regenerated `registry/generated/domains.json`.
-- A clear claim rationale.
-- Any public prefix-registry URL, if the holder chooses to publish one.
-
-Maintainers review claim validity, conflict risk, schema compliance, and privacy compliance.
-
-## Privacy
-
-Do not commit raw emails, phone numbers, postal addresses, or private holder identity mappings. For private claims, use a pseudonymous `holder_ref` such as `holder_7FQ3M2` and keep the private mapping outside this repository.
+Use public organization labels or pseudonymous holder/issuer tokens. Do not
+commit personal information, private holder mappings, internal endpoints,
+credentials, tenant details, or object inventories. Private holder mappings
+remain outside this public repository.
