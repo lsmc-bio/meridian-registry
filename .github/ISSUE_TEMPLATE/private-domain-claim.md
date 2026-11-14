@@ -1,11 +1,14 @@
 ---
 name: Private domain claim
-about: Request a private or pseudonymous Meridian domain-code assignment.
+about: Discuss a pseudonymous domain request; assignments require a PR to main.
 title: "Private domain claim: <DOMAIN>"
 labels: domain-claim, private-claim
 ---
 
 Do not include private identity details, raw emails, phone numbers, or postal addresses in this public issue.
+
+This issue is discussion only. Submit the pseudonymous record in a PR targeting
+`main`; only an authorized merge grants the assignment.
 
 Requested domain code:
 

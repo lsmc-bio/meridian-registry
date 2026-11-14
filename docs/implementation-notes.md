@@ -1,5 +1,9 @@
 # Implementation Notes
 
+The bootstrap account below is historical. Current requests follow
+[Contributing](../CONTRIBUTING.md) and the [prefix guide](prefix-registries.md),
+with approval and merge through PRs to `main`.
+
 ## Source Files Inspected
 
 The bootstrap used `/Users/jmajor/projects/lsmc/archived/meridian-euid` as the authoritative Meridian source. The inspected files were:
@@ -51,4 +55,7 @@ The source registry also contains example or boundary domains `0`, `A1`, `AB9`, 
 
 ## Prefix Boundary
 
-The source states that prefix ownership is `(DOMAIN, PREFIX)` governance and that resolver routing is governance behavior, not business truth. This registry therefore does not approve, validate, or centrally govern prefix assignments below a domain.
+The source states that prefix ownership is `(DOMAIN, PREFIX)` governance and
+resolver routing is governance behavior, not business truth. The original
+bootstrap hosted domains only. The registry now optionally hosts prefix records
+with domain-holder approval; the holder retains assignment authority.

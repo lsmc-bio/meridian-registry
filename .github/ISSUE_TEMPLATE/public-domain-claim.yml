@@ -1,9 +1,12 @@
 name: Public domain claim
-description: Request a public Meridian domain-code assignment.
+description: Discuss a domain request; assignments require a pull request to main.
 title: "Public domain claim: <DOMAIN>"
 labels:
   - domain-claim
 body:
+  - type: markdown
+    attributes:
+      value: "This issue is for discussion only. Request domain or prefix assignments, including reserved ones, with a pull request targeting main. Only an authorized merge grants the assignment."
   - type: input
     id: domain
     attributes:

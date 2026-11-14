@@ -10,8 +10,10 @@ from jsonschema import Draft202012Validator, FormatChecker
 from registry_common import (
     ROOT,
     build_index_payload,
+    build_prefix_ownership_payload,
     canonical_json,
     domain_paths,
+    load_prefix_records,
     pii_errors,
     read_json,
     string_content_errors,
@@ -98,6 +100,16 @@ def validate_registry(root: Path = ROOT) -> list[str]:
     records, errors = validate_domain_records(domain_paths(root), schema)
     if not errors:
         errors.extend(validate_generated_index(root, records))
+        try:
+            prefixes = load_prefix_records(root, records)
+            for record in prefixes:
+                errors.extend(pii_errors(record))
+            expected = canonical_json(build_prefix_ownership_payload(prefixes, records))
+            path = root / "registry" / "generated" / "prefix_ownership.json"
+            if path.read_text(encoding="utf-8") != expected:
+                errors.append(f"{path}: rebuild with python tools/build_index.py --stable")
+        except (OSError, ValueError) as exc:
+            errors.append(str(exc))
     return errors
 
 

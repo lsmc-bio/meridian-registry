@@ -1,8 +1,27 @@
 # meridian-registry
 
-Public Meridian domain-code registry.
+Public Meridian domain registry and optional domain-holder prefix registry.
 
-Meridian EUIDs have the form `DOMAIN-PREFIX-BODYCHECKSUM`. This repository governs only the `DOMAIN` part. Once a domain is assigned or reserved for a holder, that holder controls prefix assignments below that domain.
+Meridian EUIDs have the form `DOMAIN-PREFIX-BODYCHECKSUM`. This repository records
+domain assignments and can host a holder's prefix assignments. The domain holder
+still decides who may use its prefixes.
+
+**Request a domain or prefix by opening a pull request targeting `main`.**
+This includes reserved domains and prefixes. A grant takes effect only when
+the responsible authority approves it and the PR merges. An issue, local file,
+branch, release tag, or open PR is not an assignment.
+
+This is JSON in Git plus small Python tools: no server, database, bot, or
+network call for each identifier. See [Contributing](CONTRIBUTING.md) and the
+[prefix guide](docs/prefix-registries.md).
+
+```mermaid
+flowchart LR
+    Request["Domain or prefix PR"] --> Approval["Maintainer and holder approval"]
+    Approval --> Main["Merge to main"]
+    Main --> Snapshot["Explicit accepted Git revision"]
+    Snapshot --> Issuer["Client's local allocator"]
+```
 
 Registry data is governance metadata. Software must not infer object type, workflow behavior, clinical meaning, business logic, or regulatory status from domain or prefix strings.
 
@@ -19,7 +38,9 @@ Domain codes follow the Meridian source specification:
 
 Source records live in `registry/domains/<DOMAIN>.json`.
 
-The generated index lives in `registry/generated/domains.json` and is built from the source records:
+Prefix source records live in `registry/prefixes/<DOMAIN>/<PREFIX>.json`.
+Generated outputs are `registry/generated/domains.json` and
+`registry/generated/prefix_ownership.json`. Build both from source records:
 
 ```bash
 python tools/build_index.py --stable
@@ -59,7 +80,10 @@ The inspected Meridian source reserves `F` for Inflection and listed `N` for LSM
 
 ## Claim A Public Domain
 
-Open a public domain-claim issue or pull request that adds one JSON record under `registry/domains/`. The record must validate, must not include personal data, and must explain the public holder label.
+Open a PR **to `main`** adding one JSON record under `registry/domains/`.
+Explain the public holder label and requested assignment. Reserved domains
+require approval from the reservation authority or named holder; a request
+does not override the reservation. Issues are for discussion only.
 
 First valid approved claim wins, subject to maintainer review for abuse, confusing claims, squatting, or bad-faith submissions.
 
@@ -71,7 +95,14 @@ See `docs/private-claims.md`.
 
 ## Prefix Registries
 
-Prefix registries are optional and controlled by the domain holder. This repository may list a public prefix-registry URL, but it does not approve or validate prefix assignments below a domain.
+Prefix registries are optional and controlled by the domain holder. A holder
+may use this repository's four-field prefix records or explicitly declare its
+own public/private registry. Hosted assignments require holder approval in a
+PR to `main`; hosting files does not transfer the holder's authority.
+
+The prefix directory starts without imported client claims. Existing private
+assignments are not changed or automatically copied here. An absent record
+does not establish absence of a prior grant outside this registry.
 
 See `docs/prefix-registries.md`.
 

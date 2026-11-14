@@ -4,18 +4,24 @@ import argparse
 from pathlib import Path
 import sys
 
-from registry_common import ROOT, build_index_payload, load_records, write_json
+from registry_common import (
+    ROOT, build_index_payload, build_prefix_ownership_payload,
+    load_prefix_records, load_records, write_json,
+)
 
 
 def build_index(root: Path = ROOT, *, stable: bool = False) -> dict[str, object]:
     records = load_records(root)
     payload = build_index_payload(records, stable=stable)
+    prefixes = load_prefix_records(root, records)
+    ownership = build_prefix_ownership_payload(prefixes, records)
     write_json(root / "registry" / "generated" / "domains.json", payload)
+    write_json(root / "registry" / "generated" / "prefix_ownership.json", ownership)
     return payload
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build the Meridian domain index.")
+    parser = argparse.ArgumentParser(description="Build Meridian domain and prefix indexes.")
     parser.add_argument(
         "--stable",
         action="store_true",
@@ -37,7 +43,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(
         "wrote registry/generated/domains.json "
-        f"with {payload['domain_count']} domains"
+        f"with {payload['domain_count']} domains and the assigned-prefix ownership index"
     )
     return 0
 

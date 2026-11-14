@@ -17,6 +17,8 @@ GENERATED_INDEX = ROOT / "registry" / "generated" / "domains.json"
 SCHEMA_PATH = ROOT / "schemas" / "domain.schema.json"
 
 _LOWERCASE_RE = re.compile(r"[a-z]")
+_ISSUER_RE = re.compile(r"^[a-z0-9]+(?:[._-][a-z0-9]+)*$")
+PREFIX_STATUSES = frozenset({"reserved", "assigned", "retired", "disputed"})
 _EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
 _PHONE_RE = re.compile(r"(?<!\w)(?:\+?\d[\d .()/-]{7,}\d)(?!\w)")
 _POSTAL_RE = re.compile(
@@ -146,3 +148,54 @@ def load_records(root: Path = ROOT) -> list[dict[str, Any]]:
             raise ValueError(f"{path}: filename {path.stem!r} must match domain {domain!r}")
         records.append(data)
     return sorted(records, key=lambda record: record["domain"])
+
+
+def validate_prefix_record(record: Any, domains: dict[str, dict[str, Any]]) -> None:
+    """Validate the small prefix-request contract; approval remains a main PR."""
+    fields = {"domain", "prefix", "issuer_app_code", "status"}
+    if not isinstance(record, dict) or set(record) != fields:
+        raise ValueError("prefix record requires exactly: " + ", ".join(sorted(fields)))
+    for field in ("domain", "prefix"):
+        error = validate_domain_code(record[field])
+        if error:
+            raise ValueError(f"{field}: {error}")
+    domain = domains.get(record["domain"])
+    if domain is None or domain.get("prefix_authority") != "domain_holder":
+        raise ValueError("prefix requires a registered domain with domain-holder authority")
+    owner = record["issuer_app_code"]
+    if not isinstance(owner, str) or not _ISSUER_RE.fullmatch(owner):
+        raise ValueError("issuer_app_code must be an exact lowercase governance token")
+    if not isinstance(record["status"], str) or record["status"] not in PREFIX_STATUSES:
+        raise ValueError("prefix status must be reserved, assigned, retired, or disputed")
+
+
+def load_prefix_records(root: Path, domains: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    prefix_dir = root / "registry" / "prefixes"
+    if not prefix_dir.is_dir():
+        raise ValueError(f"missing prefix directory: {prefix_dir}")
+    by_domain = {record["domain"]: record for record in domains}
+    records = []
+    for path in sorted(prefix_dir.glob("*/*.json")):
+        record = read_json(path)
+        validate_prefix_record(record, by_domain)
+        if (path.parent.name, path.stem) != (record["domain"], record["prefix"]):
+            raise ValueError(f"{path}: path must match the record's domain and prefix")
+        records.append(record)
+    return records
+
+
+def build_prefix_ownership_payload(
+    records: list[dict[str, Any]], domains: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """Export only assigned prefixes under issuable domain states for Meridian."""
+    domain_states = {record["domain"]: record["status"] for record in domains}
+    ownership: dict[str, dict[str, dict[str, str]]] = {}
+    for record in records:
+        if record["status"] != "assigned":
+            continue
+        if domain_states[record["domain"]] not in {"assigned", "reserved"}:
+            continue
+        ownership.setdefault(record["domain"], {})[record["prefix"]] = {
+            "issuer_app_code": record["issuer_app_code"]
+        }
+    return {"version": "1", "ownership": ownership}
